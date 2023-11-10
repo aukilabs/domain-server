@@ -1,0 +1,66 @@
+version: '3'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  letsencrypt:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-le
+    restart: unless-stopped
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+  postgres:
+    image: postgres:14.6
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: domain_server
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U test -d domain_server" ]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+  domain-server:
+    image: aukilabs/domain-server:stable
+    depends_on:
+      - postgres
+    container_name: domain-server
+    restart: unless-stopped
+    ports:
+      - 4000:4000
+    env_file: .env.secret
+    environment:
+      - DS_POSTGRES_URL=postgres://test:test@postgres/domain_server?sslmode=disable
+      - DS_DDS_URL=https://dds.posemesh.org
+      - DS_OPERATION_MODE=private
+      - DS_LOG_LEVEL=debug
+      - DS_ADDR=:4000
+      - DS_PUBLIC_URL=https://domains.example.com
+      - DS_MAX_RETRY=3
+      - VIRTUAL_HOST=domains.example.com
+      - VIRTUAL_PORT=4000
+      - LETSENCRYPT_HOST=domains.example.com
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+  acme:
