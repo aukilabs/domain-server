@@ -1,0 +1,51 @@
+version: '3'
+services:
+  ngrok:
+    image: ngrok/ngrok:latest
+    restart: unless-stopped
+    command:
+      - http
+      - domain-server:4000
+    ports:
+      - "4040:4040"
+  ds_postgres:
+    image: postgres:14.6
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: domain_server
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U test -d domain_server" ]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+    ports:
+      - 5433:5432
+  domain-server:
+    image: alpine:3
+    depends_on:
+      - ds_postgres
+      - ngrok
+    container_name: domain-server
+    restart: unless-stopped
+    ports:
+      - 4000:4000
+    entrypoint: ["sh", "/entrypoint.sh"]
+    environment:
+      - DS_POSTGRES_URL=postgres://test:test@ds_postgres/domain_server?sslmode=disable
+      - DS_API_URL=https://api.dev.aukiverse.com
+      - DS_DDS_URL=https://dds.dev.aukiverse.com
+      - DS_OPERATION_MODE=public
+      - DS_LOG_LEVEL=debug
+    volumes:
+      - ./bin/domain-server:/ds
+      - ./data/migrations:/domain-server/data/migrations
+      - ./entrypoint.sh:/entrypoint.sh
+      - ./.env.secret:/.env.secret
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+  acme:
