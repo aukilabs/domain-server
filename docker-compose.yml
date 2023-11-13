@@ -39,7 +39,6 @@ services:
       - DS_LOG_LEVEL=debug
     volumes:
       - ./bin/domain-server:/ds
-      - ./data/migrations:/domain-server/data/migrations
       - ./entrypoint.sh:/entrypoint.sh
       - ./.env.secret:/.env.secret
 volumes:
