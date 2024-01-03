@@ -38,7 +38,7 @@ services:
     volumes:
       - ./bin/domain-server:/ds
       - ./entrypoint.sh:/entrypoint.sh
-      - .env.secret:/.env.secret
+      - ./.env.secret:/.env.secret
 volumes:
   conf:
   vhost:
