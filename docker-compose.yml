@@ -3,9 +3,7 @@ services:
   ngrok:
     image: ngrok/ngrok:latest
     restart: unless-stopped
-    command:
-      - http
-      - domain-server:4000
+    command: ["http", "domain-server:4000", "--authtoken", "26NEnvaLioMCn4dklT99FlaeFxI_2aW6qTdAtUWL6uwKTjwFp"]
     ports:
       - "4040:4040"
   ds_postgres:
@@ -40,7 +38,7 @@ services:
     volumes:
       - ./bin/domain-server:/ds
       - ./entrypoint.sh:/entrypoint.sh
-      - ./.env.secret:/.env.secret
+      - .env.secret:/.env.secret
 volumes:
   conf:
   vhost:
