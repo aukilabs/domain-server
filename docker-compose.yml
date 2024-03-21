@@ -45,7 +45,6 @@ services:
     restart: unless-stopped
     ports:
       - 4000:4000
-    env_file: .env.secret
     environment:
       - DS_POSTGRES_URL=postgres://test:test@postgres/domain_server?sslmode=disable
       - DS_DDS_URL=https://dds.posemesh.org
@@ -54,6 +53,7 @@ services:
       - DS_ADDR=:4000
       - DS_PUBLIC_URL=https://domains.example.com
       - DS_MAX_RETRY=3
+      - DS_REGISTRATION_CREDENTIALS=copy_from_console
       - VIRTUAL_HOST=domains.example.com
       - VIRTUAL_PORT=4000
       - LETSENCRYPT_HOST=domains.example.com

@@ -13,3 +13,4 @@ Here are some example parameters:
 | --public-url       | DS_PUBLIC_URL       | _N/A_   | https://domains.example.com | The public url where this domain server server is reachable. This endpoint will be registered with Domain server Discovery Service. |
 | --log-level        | DS_LOG_LEVEL        | info    | debug                      | The log level (debug, info, warning or error)                                                                              |
 | --registration-credentials | DS_REGISTRATION_CREDENTIALS | _N/A_   |          | The registration credentials you would need to register with Domain server Discovery Service                              |
+| --postgres-url | DS_POSTGRES_URL | _N/A_   | postgres://pg_user:pg_password@pg_host:pg_port/db_name?sslmode=disable         | The postgres url your domain server should connect to                              |

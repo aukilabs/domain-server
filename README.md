@@ -10,9 +10,27 @@
 
 # Deployment
 
+- [Docker Compose](#docker-compose)
 - [Binary](#binary)
 - [Docker](#docker)
-- [Docker Compose](#docker-compose)
+
+## Docker Compose
+
+Since domain server needs to be exposed with an HTTPS address and domain server itself doesn't terminate HTTPS, instead of using the pure Docker setup as described above, we recommend you to use our Docker Compose file that sets up an `nginx-proxy` container that terminates HTTPS and a `letsencrypt` container that obtains a free Let's Encrypt SSL certificate alongside domain server.
+
+1. Configure your domain name to point to your externally exposed public IP address and configure any firewalls and port forwarding rules to allow incoming traffic to ports 80 and 443.
+2. Download the latest Docker Compose YAML file from [GitHub](https://github.com/aukilabs/domains/blob/main/docker-compose.yml).
+3. Set DS_REGISTRATION_CREDENTIALS to the one you copied from Posemesh Console.
+4. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
+4. With the YAML file in the same folder, start the containers using Docker Compose: `docker-compose up -d`
+
+Just as with the pure Docker setup, we recommend you configure Docker to start automatically with your operating system. If you use our standard Docker Compose YAML file, the containers will start automatically after the Docker daemon has started.
+
+### Upgrading
+
+You can do the same steps as for Docker, but if you're not already running domain server or you have modified the `docker-compose.yml` file recently and want to deploy the changes, you can navigate to the folder where you have your `docker-compose.yml` file and then run `docker-compose pull` followed by `docker-compose down` and `docker-compose up -d`.
+
+Note that the `docker-compose pull` command will also upgrade the other containers defined in `docker-compose.yml` such as the nginx proxy and the Let's Encrypt helper.
 
 ## Binary
 
@@ -42,8 +60,16 @@ Domain server is available on [Docker Hub](https://hub.docker.com/r/aukilabs/dom
 
 Here's an example of how to run it:
 
+You need Postgres 14 to start a domain server. Check [PostgresQL](https://www.postgresql.org/download/) or [Docker](https://hub.docker.com/_/postgres). Create a database that domain server can connect to.
+
 ```shell
-docker run --name=domains --restart=unless-stopped --detach -e DS_PUBLIC_URL=https://domains.example.com -e DS_REGISTRATION_CREDENTIALS=xxx -p 4000:4000 aukilabs/domain-server:stable
+docker run --name=domains --restart=unless-stopped --detach \
+-e DS_PUBLIC_URL=https://domains.example.com \
+-e DS_REGISTRATION_CREDENTIALS=xxx \
+-e DS_OPERATION_MODE=private \
+-e DS_POSTGRES_URL=postgres://pg_user:pg_password@pg_host:pg_port/db_name?sslmode=disable \
+-e DS_DDS_URL=https://dds.posemesh.org \
+-p 4000:4000 aukilabs/domain-server:stable
 ```
 
 Domain server listens for incoming traffic on port 4000 by default. The port can be changed by
@@ -67,21 +93,3 @@ _See the full list on [Docker Hub](https://hub.docker.com/r/aukilabs/domain-serv
 If you're using a non-version specific tag (`stable` or `latest`) or if the version tag you use matches the new version of domain server you want to upgrade to, simply run `docker pull aukilabs/domain-server:stable` (where `stable` is the tag you use) and then restart your container with `docker restart domain-server` (if `domain-server` is the name of your container).
 
 If you're using a version-specific tag and the new version of domain server you want to upgrade to doesn't match the tag you use, you need to first change the tag you use and then restart your container. (`v0` matches any v0.x.x version, `v0.5` matches any v0.5.x version, and so on.)
-
-## Docker Compose
-
-Since domain server needs to be exposed with an HTTPS address and domain server itself doesn't terminate HTTPS, instead of using the pure Docker setup as described above, we recommend you to use our Docker Compose file that sets up an `nginx-proxy` container that terminates HTTPS and a `letsencrypt` container that obtains a free Let's Encrypt SSL certificate alongside domain server.
-
-1. Configure your domain name to point to your externally exposed public IP address and configure any firewalls and port forwarding rules to allow incoming traffic to ports 80 and 443.
-2. Download the latest Docker Compose YAML file from [GitHub](https://github.com/aukilabs/domains/blob/main/docker-compose.yml).
-3. Configure the environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `domain server_PUBLIC_ENDPOINT`, set these to the domain name you configured in step 1).
-4. Copy `.env.template` to a `.env.secret`, replace with your own registration credentials
-5. With the YAML file in the same folder, start the containers using Docker Compose: `docker-compose up -d`
-
-Just as with the pure Docker setup, we recommend you configure Docker to start automatically with your operating system. If you use our standard Docker Compose YAML file, the containers will start automatically after the Docker daemon has started.
-
-### Upgrading
-
-You can do the same steps as for Docker, but if you're not already running domain server or you have modified the `docker-compose.yml` file recently and want to deploy the changes, you can navigate to the folder where you have your `docker-compose.yml` file and then run `docker-compose pull` followed by `docker-compose down` and `docker-compose up -d`.
-
-Note that the `docker-compose pull` command will also upgrade the other containers defined in `docker-compose.yml` such as the nginx proxy and the Let's Encrypt helper.
