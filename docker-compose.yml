@@ -1,8 +1,8 @@
 version: '3'
 services:
-  nginx-proxy:
+  nginx_proxy:
     image: jwilder/nginx-proxy
-    container_name: nginx-proxy
+    container_name: ds_nginx_proxy
     restart: unless-stopped
     ports:
       - '80:80'
@@ -16,7 +16,6 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
   letsencrypt:
     image: nginxproxy/acme-companion
-    container_name: nginx-proxy-le
     restart: unless-stopped
     volumes:
       - certs:/etc/nginx/certs:rw
@@ -25,7 +24,7 @@ services:
       - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - NGINX_PROXY_CONTAINER=nginx-proxy
+      - NGINX_PROXY_CONTAINER=ds_nginx_proxy
   postgres:
     image: postgres:14.6
     environment:
@@ -37,11 +36,10 @@ services:
       interval: 1s
       timeout: 5s
       retries: 5
-  domain-server:
+  domain_server:
     image: aukilabs/domain-server:stable
     depends_on:
       - postgres
-    container_name: domain-server
     restart: unless-stopped
     ports:
       - 4000:4000
