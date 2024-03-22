@@ -1,13 +1,13 @@
 # Domain Server
 ## Operation Mode
-- Public: anyone can save data to your server. Auki is running one on https://domain-server.posemesh.org, you can find all the other servers run by the community from Posemesh Console's `Domain Servers` page
+- Public: anyone can save data to your server. Auki is running one at https://domain-server.posemesh.org. You can find all the other servers run by the community from the Posemesh Console's `Domain Servers` page.
 - Private: only people from your organization can save their data to your server, but anyone will be able to read.
 
 ## Create Server
-1. Log into Posemesh Console https://console.posemesh.org/
-2. Run `localStorage.setItem("domainservice", true);` in browser console
+1. Log into the Posemesh Console at https://console.posemesh.org/
+2. Run `localStorage.setItem("domainservice", true);` in the browser's console.
 3. Open `Domain Servers` page and create a server. `Redirect URL` is optional, it is the url you want to redirect users to when users scan a lighthouse using a non Auki SDK app. This value can be overwritten by domain's redirect url and lighthouse's redirect url. If empty, https://aukilabs.com will be used by default.
-4. Make sure you have copied the registration credentials
+4. Make sure you have copied the registration credentials.
 
 # Deployment
 
@@ -21,7 +21,7 @@ Since domain server needs to be exposed with an HTTPS address and domain server 
 
 1. Configure your domain name to point to your externally exposed public IP address and configure any firewalls and port forwarding rules to allow incoming traffic to ports 80 and 443.
 2. Download the latest Docker Compose YAML file from [GitHub](https://github.com/aukilabs/domains/blob/main/docker-compose.yml).
-3. Set DS_REGISTRATION_CREDENTIALS to the one you copied from Posemesh Console.
+3. Set DS_REGISTRATION_CREDENTIALS to the one you copied from the Posemesh Console.
 4. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
 4. With the YAML file in the same folder, start the containers using Docker Compose: `docker-compose up -d`
 
@@ -42,7 +42,7 @@ Note that the `docker-compose pull` command will also upgrade the other containe
 We build pre-compiled binaries for these operating systems and architectures:
 
 - Windows x86, x86_64
-- macOS x86_64, ARM64 (M1)
+- macOS x86_64, ARM64 (Apple Silicon)
 - Linux x86, x86_64, ARM, ARM64
 - FreeBSD x86, x86_64
 - Solaris x86_64
