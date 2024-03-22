@@ -4,7 +4,7 @@
 - Private: only people from your organization can save their data to your server, but anyone will be able to read.
 
 ## Create Server
-1. Log into Posemesh Console
+1. Log into Posemesh Console https://console.posemesh.org/
 2. Run `localStorage.setItem("domainservice", true);` in browser console
 3. Open `Domain Servers` page and create a server. `Redirect URL` is optional, it is the url you want to redirect users to when users scan a lighthouse using a non Auki SDK app. This value can be overwritten by domain's redirect url and lighthouse's redirect url. If empty, https://aukilabs.com will be used by default.
 4. Make sure you have copied the registration credentials
