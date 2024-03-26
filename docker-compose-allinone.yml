@@ -1,0 +1,84 @@
+version: '3'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    restart: unless-stopped
+    container_name: nginx-proxy
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  letsencrypt:
+    image: nginxproxy/acme-companion
+    restart: unless-stopped
+    volumes:
+      - certs:/etc/nginx/certs:rw
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - acme:/etc/acme.sh
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+  postgres:
+    image: postgres:14.6
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: domain_server
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U test -d domain_server" ]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+  domain-server:
+    image: aukilabs/domain-server:latest
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    environment:
+      DS_POSTGRES_URL: postgres://test:test@postgres/domain_server?sslmode=disable
+      DS_DDS_URL: https://dds.dev.aukiverse.com
+      DS_OPERATION_MODE: private
+      DS_LOG_LEVEL: info
+      DS_ADDR: :4000
+      DS_PUBLIC_URL: https://example.com/domains
+      DS_MAX_RETRY: 3
+      DS_REGISTRATION_CREDENTIALS: YWYyZTZjZjQtZDM3MS00ZTEyLThmZGItYTJkOTY0M2JiYTcwOk9EWTFNVE5pTnpBdE1qZ3hOaTAwWVdVeExXRTJZak10TnpkbVpEZGpOR1JtWVRJMg==
+      VIRTUAL_HOST: example.com
+      VIRTUAL_PATH: /domains/
+      VIRTUAL_DEST: /
+      VIRTUAL_PORT: 4000
+      LETSENCRYPT_HOST: example.com
+  hagall:
+    image: aukilabs/hagall:stable
+    restart: unless-stopped
+    volumes:
+      - './hagall-private.key:/hagall-private.key:ro'
+    ports:
+      - 18190:18190
+    environment:
+      VIRTUAL_HOST: example.com
+      VIRTUAL_PORT: 8080
+      VIRTUAL_PATH: /hagall/
+      VIRTUAL_DEST: /
+      LETSENCRYPT_HOST: example.com
+      HAGALL_ADDR: :8080
+      HAGALL_PUBLIC_ENDPOINT: https://example.com/hagall
+      HAGALL_PRIVATE_KEY_FILE: /hagall-private.key
+      HAGALL_LOG_LEVEL: info
+      HAGALL_HDS_ENDPOINT: https://hds.dev.aukiverse.com
+      HAGALL_NCS_ENDPOINT: https://ncs.dev.aukiverse.com
+      HAGALL_HDS_REGISTRATION_INTERVAL: 10s
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+  acme:

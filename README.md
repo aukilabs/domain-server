@@ -6,7 +6,7 @@
 ## Create Server
 1. Log into the Posemesh Console at https://console.posemesh.org/
 2. Run `localStorage.setItem("domainservice", true);` in the browser's console.
-3. Open `Domain Servers` page and create a server. `Redirect URL` is optional, it is the url you want to redirect users to when users scan a lighthouse using a non Auki SDK app. This value can be overwritten by domain's redirect url and lighthouse's redirect url. If empty, https://aukilabs.com will be used by default.
+3. Open `Domain Servers` page and create a server. `Redirect URL` is optional, it is the url you want to redirect users to when users scan a portal using a non Auki SDK app. This value can be overwritten by domain's redirect url and portal's redirect url. If empty, https://aukilabs.com will be used by default.
 4. Make sure you have copied the registration credentials.
 
 # Deployment
@@ -26,6 +26,8 @@ Since domain server needs to be exposed with an HTTPS address and domain server 
 4. With the YAML file in the same folder, start the containers using Docker Compose: `docker-compose up -d`
 
 Just as with the pure Docker setup, we recommend you configure Docker to start automatically with your operating system. If you use our standard Docker Compose YAML file, the containers will start automatically after the Docker daemon has started.
+
+Try `docker compose -f docker-compose-allinone.yml up -d` if you want to host both Hagall and domain server from the same domain.
 
 ### Upgrading
 
