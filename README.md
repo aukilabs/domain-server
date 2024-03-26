@@ -63,7 +63,7 @@ Domain server is available on [Docker Hub](https://hub.docker.com/r/aukilabs/dom
 
 Here's an example of how to run it:
 
-You need Postgres 14 to start a domain server. Check [PostgresQL](https://www.postgresql.org/download/) or [Docker](https://hub.docker.com/_/postgres). Create a database that domain server can connect to.
+You need Postgres 14 to start a domain server. Check PostgreSQL [official website](https://www.postgresql.org/download/) or [Docker Hub Repository](https://hub.docker.com/_/postgres). Create a database that domain server can connect to.
 
 ```shell
 docker run --name=domains --restart=unless-stopped --detach \
@@ -71,13 +71,8 @@ docker run --name=domains --restart=unless-stopped --detach \
 -e DS_REGISTRATION_CREDENTIALS=xxx \
 -e DS_OPERATION_MODE=private \
 -e DS_POSTGRES_URL=postgres://pg_user:pg_password@pg_host:pg_port/db_name?sslmode=disable \
--e DS_DDS_URL=https://dds.posemesh.org \
 -p 4000:4000 aukilabs/domain-server:stable
 ```
-
-Domain server listens for incoming traffic on port 4000 by default. The port can be changed by
-changing domain server's [configuration](configuration.md) or by simply changing the publish
-(`-p`) argument in the `docker run` command.
 
 We also recommend you to configure Docker to start automatically with your operating system. Using `--restart=unless-stopped` in your `docker run` command will start domain server automatically after the Docker daemon has started.
 
@@ -85,6 +80,7 @@ We also recommend you to configure Docker to start automatically with your opera
 
 _See the full list on [Docker Hub](https://hub.docker.com/r/aukilabs/domain-server)._
 
+- `latest` (bleeding edge, not recommended)
 - `stable` (latest stable version, recommended)
 - `v0` (specific major version)
 - `v0.5` (specific minor version)
@@ -92,6 +88,6 @@ _See the full list on [Docker Hub](https://hub.docker.com/r/aukilabs/domain-serv
 
 ### Upgrading
 
-If you're using a non-version specific tag (`stable`) or if the version tag you use matches the new version of domain server you want to upgrade to, simply run `docker pull aukilabs/domain-server:stable` (where `stable` is the tag you use) and then restart your container with `docker restart domain-server` (if `domain-server` is the name of your container).
+If you're using a non-version specific tag (`stable` or `latest`) or if the version tag you use matches the new version of domain server you want to upgrade to, simply run `docker pull aukilabs/domain-server:stable` (where `stable` is the tag you use) and then restart your container with `docker restart domain-server` (if `domain-server` is the name of your container).
 
 If you're using a version-specific tag and the new version of domain server you want to upgrade to doesn't match the tag you use, you need to first change the tag you use and then restart your container. (`v0` matches any v0.x.x version, `v0.5` matches any v0.5.x version, and so on.)
