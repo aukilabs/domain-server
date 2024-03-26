@@ -69,7 +69,6 @@ You need Postgres 14 to start a domain server. Check PostgreSQL [official websit
 docker run --name=domains --restart=unless-stopped --detach \
 -e DS_PUBLIC_URL=https://domains.example.com \
 -e DS_REGISTRATION_CREDENTIALS=xxx \
--e DS_OPERATION_MODE=private \
 -e DS_POSTGRES_URL=postgres://pg_user:pg_password@pg_host:pg_port/db_name?sslmode=disable \
 -p 4000:4000 aukilabs/domain-server:stable
 ```
