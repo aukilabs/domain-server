@@ -1,12 +1,12 @@
 # Domain Server
 ## Operation Mode
-- Public: anyone can save data to your server. Auki is running one at https://domain-server.posemesh.org. You can find all the other servers run by the community from the Posemesh Console's `Domain Servers` page.
+- Public: anyone can save data to your server. Auki Labs is running one at https://domain-server.posemesh.org. You can find all the other servers run by the community from the Posemesh Console's `Domain Servers` page.
 - Private: only people from your organization can save their data to your server, but anyone will be able to read.
 
 ## Create Server
 1. Log into the Posemesh Console at https://console.posemesh.org/
 2. Run `localStorage.setItem("domainservice", true);` in the browser's console.
-3. Open `Domain Servers` page and create a server. `Redirect URL` is optional, it is the url you want to redirect users to when users scan a portal using a non Auki SDK app. This value can be overwritten by domain's redirect url and portal's redirect url. If empty, https://aukilabs.com will be used by default.
+3. Open `Domain Servers` page and create a server. `Redirect URL` is optional, it is the URL you want to redirect users to when they scan a portal using a non Auki SDK app. This value can be overwritten by domain's redirect URL and portal's redirect URL. If empty, https://aukilabs.com will be used by default.
 4. Make sure you have copied the registration credentials.
 
 # Deployment
@@ -30,7 +30,7 @@ Just as with the pure Docker setup, we recommend you configure Docker to start a
 ### Host domain server and hagall under the same domain name
 1. Change `example.com` to your domain name in `docker-compose-allinone.yml`
 2. Rename `/vhost/example.com_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override` to `your_domain_name_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override`. `d2efb4c954a02e7a924a3a53a170bfa66d37cd6c` is the [hash](https://github.com/nginx-proxy/nginx-proxy/tree/main/docs#per-virtual_path-location-configuration) of path `/hagall`.
-3. Edit `your_domain_name_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override` content
+3. Edit content of `your_domain_name_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override`:
 ```
 location /hagall {
     proxy_pass http://your-domain-name-c8f6287a73f20b115297fd3c94378fdfbd88ddc2/;
