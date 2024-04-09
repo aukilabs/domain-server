@@ -27,7 +27,22 @@ Since domain server needs to be exposed with an HTTPS address and domain server 
 
 Just as with the pure Docker setup, we recommend you configure Docker to start automatically with your operating system. If you use our standard Docker Compose YAML file, the containers will start automatically after the Docker daemon has started.
 
-Try `docker compose -f docker-compose-allinone.yml up -d` if you want to host both Hagall and domain server from the same domain.
+### Host domain server and hagall under the same domain name
+1. Change `example.com` to your domain name in `docker-compose-allinone.yml`
+2. Rename `/vhost/example.com_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override` to `your_domain_name_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override`. `d2efb4c954a02e7a924a3a53a170bfa66d37cd6c` is the [hash](https://github.com/nginx-proxy/nginx-proxy/tree/main/docs#per-virtual_path-location-configuration) of path `/hagall`.
+3. Edit `your_domain_name_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override` content
+```
+location /hagall {
+    proxy_pass http://your-domain-name-c8f6287a73f20b115297fd3c94378fdfbd88ddc2/;
+    set $upstream_keepalive true;
+}
+```
+This location block is supposed to proxy all RESTFul `/hagall/*` requests and websocket connection `/hagall` to the hagall server. Check [Overriding location blocks](https://github.com/nginx-proxy/nginx-proxy/tree/main/docs#overriding-location-blocks) for more information.
+4. 
+If you have Hagall running using this [docker-compose file](https://github.com/aukilabs/hagall/blob/main/docker-compose.yml), make sure you stop your Hagall first, ex `docker compose -f hagall-docker-compose-file-path.yaml down`, this is for releasing port 443 and 80.
+
+Run `docker compose -f docker-compose-allinone.yml up -d` to start hagall server and domain server under the same domain. Hagall is hosted at `https://your-domain-name/hagall` and domain server is at `https://your-domain-name/domains`
+5. You will always need to specify `-f docker-compose-allinone.yml` when you run any docker compose command like `up`, `pull`, `down` and `stop`.
 
 ### Upgrading
 

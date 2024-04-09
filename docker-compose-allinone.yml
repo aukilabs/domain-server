@@ -9,7 +9,7 @@ services:
       - '443:443'
     volumes:
       - conf:/etc/nginx/conf.d
-      - vhost:/etc/nginx/vhost.d
+      - ./vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - dhparam:/etc/nginx/dhparam
       - certs:/etc/nginx/certs:ro
@@ -37,7 +37,7 @@ services:
       timeout: 5s
       retries: 5
   domain-server:
-    image: aukilabs/domain-server:latest
+    image: aukilabs/domain-server:stable
     depends_on:
       - postgres
     restart: unless-stopped
@@ -57,7 +57,7 @@ services:
     image: aukilabs/hagall:stable
     restart: unless-stopped
     volumes:
-      - './hagall-private.key:/hagall-private.key:ro'
+      - ./hagall-private.key:/hagall-private.key:ro
     ports:
       - 18190:18190
     environment:
@@ -70,6 +70,12 @@ services:
       HAGALL_PUBLIC_ENDPOINT: https://example.com/hagall
       HAGALL_PRIVATE_KEY_FILE: /hagall-private.key
       HAGALL_LOG_LEVEL: info
+  hagall-ws:
+    image: busybox:stable-musl
+    command: tail -f /dev/null
+    environment:
+      VIRTUAL_HOST: example.com
+      VIRTUAL_PATH: /hagall
 volumes:
   conf:
   vhost:

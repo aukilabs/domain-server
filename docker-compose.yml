@@ -1,8 +1,8 @@
 version: '3'
 services:
-  nginx_proxy:
+  nginx-proxy:
     image: jwilder/nginx-proxy
-    container_name: ds_nginx_proxy
+    container_name: nginx-proxy
     restart: unless-stopped
     ports:
       - '80:80'
@@ -24,7 +24,7 @@ services:
       - acme:/etc/acme.sh
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
-      - NGINX_PROXY_CONTAINER=ds_nginx_proxy
+      - NGINX_PROXY_CONTAINER=nginx-proxy
   postgres:
     image: postgres:14.6
     environment:
