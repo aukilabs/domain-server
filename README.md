@@ -29,12 +29,17 @@ Just as with the pure Docker setup, we recommend you configure Docker to start a
 
 ### Host domain server and hagall under the same domain name
 1. Change `example.com` to your domain name in `docker-compose-allinone.yml`
-2. Rename `/vhost/example.com_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override` to `your_domain_name_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override`. `d2efb4c954a02e7a924a3a53a170bfa66d37cd6c` is the [hash](https://github.com/nginx-proxy/nginx-proxy/tree/main/docs#per-virtual_path-location-configuration) of path `/hagall`.
-3. Edit content of `your_domain_name_d2efb4c954a02e7a924a3a53a170bfa66d37cd6c_location_override`:
+2. Rename `/vhost/example.com_352d4688a80e2903485335a1a456d5256df64d6f_location_override` to `your_domain_name_352d4688a80e2903485335a1a456d5256df64d6f_location_override`.
+3. Edit content of `your_domain_name_352d4688a80e2903485335a1a456d5256df64d6f_location_override`
 ```
 location /hagall {
-    proxy_pass http://your-domain-name-c8f6287a73f20b115297fd3c94378fdfbd88ddc2/;
+    proxy_pass http://your-domain-name.com-352d4688a80e2903485335a1a456d5256df64d6f/;
     set $upstream_keepalive true;
+}
+
+location /hagall/ {
+    proxy_pass http://your-domain-name-352d4688a80e2903485335a1a456d5256df64d6f/;
+    set $upstream_keepalive false;
 }
 ```
 This location block is supposed to proxy all RESTFul `/hagall/*` requests and websocket connection `/hagall` to the hagall server. Check [Overriding location blocks](https://github.com/nginx-proxy/nginx-proxy/tree/main/docs#overriding-location-blocks) for more information.

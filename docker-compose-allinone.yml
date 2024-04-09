@@ -63,19 +63,12 @@ services:
     environment:
       VIRTUAL_HOST: example.com
       VIRTUAL_PORT: 8080
-      VIRTUAL_PATH: /hagall/
-      VIRTUAL_DEST: /
+      VIRTUAL_PATH: ~^/hagall\/?$
       LETSENCRYPT_HOST: example.com
       HAGALL_ADDR: :8080
       HAGALL_PUBLIC_ENDPOINT: https://example.com/hagall
       HAGALL_PRIVATE_KEY_FILE: /hagall-private.key
       HAGALL_LOG_LEVEL: info
-  hagall-ws:
-    image: busybox:stable-musl
-    command: tail -f /dev/null
-    environment:
-      VIRTUAL_HOST: example.com
-      VIRTUAL_PATH: /hagall
 volumes:
   conf:
   vhost:
