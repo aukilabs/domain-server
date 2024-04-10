@@ -29,24 +29,10 @@ Just as with the pure Docker setup, we recommend you configure Docker to start a
 
 ### Host domain server and hagall under the same domain name
 1. Change `example.com` to your domain name in `docker-compose-allinone.yml`
-2. Rename `/vhost/example.com_352d4688a80e2903485335a1a456d5256df64d6f_location_override` to `your_domain_name_352d4688a80e2903485335a1a456d5256df64d6f_location_override`.
-3. Edit content of `your_domain_name_352d4688a80e2903485335a1a456d5256df64d6f_location_override`
-```
-location /hagall {
-    proxy_pass http://your-domain-name.com-352d4688a80e2903485335a1a456d5256df64d6f/;
-    set $upstream_keepalive true;
-}
-
-location /hagall/ {
-    proxy_pass http://your-domain-name-352d4688a80e2903485335a1a456d5256df64d6f/;
-    set $upstream_keepalive false;
-}
-```
-This location block is supposed to proxy all RESTFul `/hagall/*` requests and websocket connection `/hagall` to the hagall server. Check [Overriding location blocks](https://github.com/nginx-proxy/nginx-proxy/tree/main/docs#overriding-location-blocks) for more information.
-4. 
+2. 
 If you have Hagall running using this [docker-compose file](https://github.com/aukilabs/hagall/blob/main/docker-compose.yml), make sure you stop your Hagall first, ex `docker compose -f hagall-docker-compose-file-path.yaml down`, this is for releasing port 443 and 80.
 
-Run `docker compose -f docker-compose-allinone.yml up -d` to start hagall server and domain server under the same domain. Hagall is hosted at `https://your-domain-name/hagall` and domain server is at `https://your-domain-name/domains`
+Run `docker compose -f docker-compose-allinone.yml up -d` to start hagall server and domain server under the same domain. Hagall is hosted at `https://your-domain-name/hagall/` and domain server is at `https://your-domain-name/domains/`
 5. You will always need to specify `-f docker-compose-allinone.yml` when you run any docker compose command like `up`, `pull`, `down` and `stop`.
 
 ### Upgrading

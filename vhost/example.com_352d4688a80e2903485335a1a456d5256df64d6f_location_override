@@ -1,9 +1,0 @@
-location /hagall {
-    proxy_pass http://example.com-352d4688a80e2903485335a1a456d5256df64d6f/;
-    set $upstream_keepalive true;
-}
-
-location /hagall/ {
-    proxy_pass http://example.com-352d4688a80e2903485335a1a456d5256df64d6f/;
-    set $upstream_keepalive false;
-}
