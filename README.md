@@ -28,12 +28,10 @@ Since domain server needs to be exposed with an HTTPS address and domain server 
 Just as with the pure Docker setup, we recommend you configure Docker to start automatically with your operating system. If you use our standard Docker Compose YAML file, the containers will start automatically after the Docker daemon has started.
 
 ### Host domain server and hagall under the same domain name
-1. Change `example.com` to your domain name in `docker-compose-allinone.yml`, trailing slash is essential in HAGALL_PUBLIC_ENDPOINT
-2. 
-If you have Hagall running using this [docker-compose file](https://github.com/aukilabs/hagall/blob/main/docker-compose.yml), make sure you stop your Hagall first, ex `docker compose -f hagall-docker-compose-file-path.yaml down`, this is for releasing port 443 and 80.
-
-Run `docker compose -f docker-compose-allinone.yml up -d` to start hagall server and domain server under the same domain. Hagall is hosted at `https://your-domain-name/hagall/` and domain server is at `https://your-domain-name/domains/`
-5. You will always need to specify `-f docker-compose-allinone.yml` when you run any docker compose command like `up`, `pull`, `down` and `stop`.
+1. Change `example.com` to your domain name in `docker-compose-allinone.yml`, trailing slash is essential in HAGALL_PUBLIC_ENDPOINT.
+2. If you have Hagall running using this [docker-compose file](https://github.com/aukilabs/hagall/blob/main/docker-compose.yml), make sure to stop your Hagall server first, e.g. `docker compose -f hagall-docker-compose-file-path.yaml down`, in order to release port 443 and 80.
+3. Run `docker compose -f docker-compose-allinone.yml up -d` to start the Hagall server and domain server under the same domain. Hagall is hosted at `https://your-domain-name/hagall/` and domain server is at `https://your-domain-name/domains/`
+4. You will always need to specify `-f docker-compose-allinone.yml` when you run any docker compose command like `up`, `pull`, `down` and `stop`.
 
 ### Upgrading
 
