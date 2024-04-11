@@ -1,7 +1,7 @@
 # Domain Server
 ## Operation Mode
 - Public: anyone can save data to your server. Auki Labs is running one at https://domain-server.posemesh.org. You can find all the other servers run by the community from the Posemesh Console's `Domain Servers` page.
-- Private: only people from your organization can save their data to your server, but anyone will be able to read.
+- Dedicated: only people from your organization can save their data to your server, but anyone will be able to read.
 
 ## Create Server
 1. Log into the Posemesh Console at https://console.posemesh.org/
