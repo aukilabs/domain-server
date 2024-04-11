@@ -67,7 +67,7 @@ services:
       VIRTUAL_DEST: /
       LETSENCRYPT_HOST: example.com
       HAGALL_ADDR: :8080
-      HAGALL_PUBLIC_ENDPOINT: https://example.com/hagall
+      HAGALL_PUBLIC_ENDPOINT: https://example.com/hagall/
       HAGALL_PRIVATE_KEY_FILE: /hagall-private.key
       HAGALL_LOG_LEVEL: info
 volumes:
