@@ -6,7 +6,7 @@
 ## Create Server
 1. Log into the Posemesh Console at https://console.posemesh.org/
 2. Open the `Domain Servers` page and create a server. `Redirect URL` is optional; it's the URL you want to redirect users to when they scan a portal using a non-Posemesh SDK app. This value can be overwritten by specifying redirect URLs for domains hosted by this domain server or for portals within the domains. If empty, https://aukilabs.com will be used by default.
-3. Make sure you have copied the registration credentials. You will need this to start your domain server.
+3. Make sure you have copied the registration credentials. You will need them for the domain server configuration.
 
 # Deployment
 
