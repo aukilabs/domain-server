@@ -25,7 +25,7 @@ services:
     environment:
       - NGINX_PROXY_CONTAINER=nginx-proxy
   postgres:
-    image: postgres:14.6
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
