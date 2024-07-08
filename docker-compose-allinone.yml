@@ -27,32 +27,37 @@ services:
       - NGINX_PROXY_CONTAINER=nginx-proxy
   postgres:
     image: postgres:16-alpine
+    volumes:
+      - ./domain-server/postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
-      POSTGRES_DB: domain_server
+      POSTGRES_DB: domain-server
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U test -d domain_server" ]
+      test: [ "CMD-SHELL", "pg_isready -U test -d domain-server" ]
       interval: 1s
       timeout: 5s
       retries: 5
   domain-server:
     image: aukilabs/domain-server:stable
+    restart: unless-stopped
     depends_on:
       - postgres
-    restart: unless-stopped
+    volumes:
+      - ./domain-server/domain-data:/app/data/domain-data
     environment: 
       VIRTUAL_HOST: example.com
       VIRTUAL_PATH: /domains/
       VIRTUAL_DEST: /
       VIRTUAL_PORT: 4000
       LETSENCRYPT_HOST: example.com
-      DS_POSTGRES_URL: postgres://test:test@postgres/domain_server?sslmode=disable
+      DS_POSTGRES_URL: postgres://test:test@postgres/domain-server?sslmode=disable
       DS_OPERATION_MODE: private
       DS_LOG_LEVEL: info
       DS_ADDR: :4000
       DS_PUBLIC_URL: https://example.com/domains
       DS_REGISTRATION_CREDENTIALS: copy_from_console
+      DS_STORAGE_LOCAL_PATH: "/app/data/domain-data"
   hagall:
     image: aukilabs/hagall:stable
     restart: unless-stopped
