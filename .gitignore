@@ -1,1 +1,3 @@
 .env.secret
+domain-server
+wallet-private.key

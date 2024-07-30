@@ -45,6 +45,7 @@ services:
       - postgres
     volumes:
       - ./domain-server/domain-data:/app/data/domain-data
+      - ./wallet-private.key:/wallet-private.key:ro
     environment:
       - VIRTUAL_HOST=domains.example.com
       - VIRTUAL_PORT=4000
@@ -56,6 +57,7 @@ services:
       - DS_PUBLIC_URL=https://domains.example.com
       - DS_REGISTRATION_CREDENTIALS=copy_from_console
       - DS_STORAGE_LOCAL_PATH=/app/data/domain-data
+      - DS_WALLET_PRIVATE_KEY_FILE_PATH=/wallet-private.key
 volumes:
   conf:
   vhost:
