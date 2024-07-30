@@ -16,18 +16,19 @@
 
 ## Docker Compose
 
-Since the domain server needs to be exposed with an HTTPS address and the domain server itself doesn't terminate HTTPS, instead of using the pure Docker setup as described above, we recommend you to use our Docker Compose file that sets up an `nginx-proxy` container that terminates HTTPS and a `letsencrypt` container that obtains a free Let's Encrypt SSL certificate alongside the domain server.
+Since the domain server needs to be exposed with an HTTPS address and the domain server itself doesn't terminate HTTPS, instead of using the pure Docker setup as described below, we recommend you to use our Docker Compose file that sets up an `nginx-proxy` container that terminates HTTPS and a `letsencrypt` container that obtains a free Let's Encrypt SSL certificate alongside the domain server.
 
 1. Configure your domain name to point to your externally exposed public IP address and configure any firewalls and port forwarding rules to allow incoming traffic to ports 80 and 443.
-2. Download the latest Docker Compose YAML file from [GitHub](https://github.com/aukilabs/domains/blob/main/docker-compose.yml).
-3. Set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Posemesh Console.
+2. Clone/[download](https://github.com/aukilabs/domains/archive/refs/heads/main.zip) this repository or download the Docker Compose YAML [file](https://raw.githubusercontent.com/aukilabs/domains/main/docker-compose.yml) and [`client_max_body_size.conf`](https://raw.githubusercontent.com/aukilabs/domains/main/client_max_body_size.conf) separately.
+3. Modify `docker-compose.yml` to set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Posemesh Console.
 4. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
-4. With the YAML file in the same folder, start the containers using Docker Compose: `docker-compose up -d`
+5. Configure the wallet private key to use. See [Configuration](docs/configuration.md).
+6. With the YAML file in the same folder, start the containers using Docker Compose: `docker-compose up -d`
 
 Just as with the pure Docker setup, we recommend you configure Docker to start automatically with your operating system. If you use our standard Docker Compose YAML file, the containers will start automatically after the Docker daemon has started.
 
 ### Host a domain server and Hagall under the same domain name
-1. Change `example.com` to your domain name in `docker-compose-allinone.yml`, trailing slash is essential in HAGALL_PUBLIC_ENDPOINT.
+1. Change `example.com` to your domain name in `docker-compose-allinone.yml`, trailing slash is essential in `HAGALL_PUBLIC_ENDPOINT`.
 2. If you have Hagall running using this [docker-compose file](https://github.com/aukilabs/hagall/blob/main/docker-compose.yml), make sure to stop your Hagall server first, e.g. `docker compose -f hagall-docker-compose-file-path.yaml down`, in order to release port 443 and 80.
 3. Run `docker compose -f docker-compose-allinone.yml up -d` to start Hagall and the domain server under the same domain. Hagall will be hosted at `https://your-domain-name/hagall/` and the domain server at `https://your-domain-name/domains/`
 4. You will always need to specify `-f docker-compose-allinone.yml` when you run any Docker Compose command like `up`, `pull`, `down` and `stop`.
