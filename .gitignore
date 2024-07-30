@@ -1,1 +1,4 @@
 .env.secret
+domain-server
+hagall-private.key
+domain-server-private.key
