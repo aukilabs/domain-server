@@ -25,3 +25,13 @@ Configuration parameters can be passed to domain server either as environment va
 | `--upload-request-size-limit`  | `DS_UPLOAD_REQUEST_SIZE_LIMIT`  | _N/A_                        | `104857600` (100 MB)              | The upload request size limit in bytes.                                                                                                                                                      |
 | `--domain-data-size-limit`   | `DS_DOMAIN_DATA_SIZE_LIMIT`     | _N/A_                          | `10485760` (10 MB)                | The domain data size limit in bytes.                                                                                                                                                         |
 | `--storage.local-path` | `DS_STORAGE_LOCAL_PATH` | ./volume | /app/data/domain-data | Where to save domain data |
+
+Every domain server needs a unique wallet. You can generate it in a wallet app of your choice (such as MetaMask) and copy its private key to a file called domain-server-private.key. If you wish to generate a wallet on the command-line, make sure that you back up your private key (for example by adding it to your wallet app) to not lose your stake or rewards. Here is an example command to generate a wallet and save its private key to a file so domain server can use it:
+```
+pip3 install web3
+python3 -c "from web3 import Web3; w3 = Web3(); acc = w3.eth.account.create(); print(f'{w3.to_hex(acc.key)}')" > domain-server-private.key
+chmod 400 domain-server-private.key
+```
+We recommend that the private key is supplied as a file (DS_WALLET_PRIVATE_KEY_FILE_PATH) rather than directly on the command line or through environment variables (DS_WALLET_PRIVATE_KEY) as files are more secure.
+
+DO NOT CONFIGURE A WALLET WITH EXISTING ASSETS, instead generate a new wallet for every domain server you operate. The private key of your wallet is only used by domain server for authentication and verification of your reputation deposit and will stay on your machine. But if someone gains access to the private key file on your server, they will get access to your wallet, so please take appropriate precautions.

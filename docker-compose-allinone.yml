@@ -45,7 +45,7 @@ services:
       - postgres
     volumes:
       - ./domain-server/domain-data:/app/data/domain-data
-      - ./wallet-private.key:/wallet-private.key:ro
+      - ./domain-server-private.key:/domain-server-private.key:ro
     environment: 
       VIRTUAL_HOST: example.com
       VIRTUAL_PATH: /domains/
@@ -59,12 +59,12 @@ services:
       DS_PUBLIC_URL: https://example.com/domains
       DS_REGISTRATION_CREDENTIALS: copy_from_console
       DS_STORAGE_LOCAL_PATH: "/app/data/domain-data"
-      DS_WALLET_PRIVATE_KEY_FILE_PATH: /wallet-private.key
+      DS_WALLET_PRIVATE_KEY_FILE_PATH: /domain-server-private.key
   hagall:
     image: aukilabs/hagall:stable
     restart: unless-stopped
     volumes:
-      - ./wallet-private.key:/wallet-private.key:ro
+      - ./hagall-private.key:/hagall-private.key:ro
     ports:
       - 18190:18190
     environment:
@@ -75,7 +75,7 @@ services:
       LETSENCRYPT_HOST: example.com
       HAGALL_ADDR: :8080
       HAGALL_PUBLIC_ENDPOINT: https://example.com/hagall/
-      HAGALL_PRIVATE_KEY_FILE: /wallet-private.key
+      HAGALL_PRIVATE_KEY_FILE: /hagall-private.key
       HAGALL_LOG_LEVEL: info
 volumes:
   conf:

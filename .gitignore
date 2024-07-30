@@ -1,3 +1,4 @@
 .env.secret
 domain-server
-wallet-private.key
+hagall-private.key
+domain-server-private.key
