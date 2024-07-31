@@ -98,10 +98,14 @@ If you're using a version-specific tag and the new version of the domain server 
 
 ## Generating random passwords
 
-To generate a random password you can use the following command in Linux or Mac terminal:
+To generate a random password you can use one of the following commands in Linux or Mac terminal:
 
 ```
 openssl rand -base64 64 | tr -dc A-Za-z0-9 | head -c 24
+```
+
+```
+cat /dev/urandom | base64 | tr -dc A-Za-z0-9 | head -c24
 ```
 
 This will first generate a random string encoded in base64, then run it through `tr` command to leave only alphanumeric characters and then use `head` command to cut the string to 24 characters.
