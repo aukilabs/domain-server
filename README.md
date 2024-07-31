@@ -23,7 +23,7 @@ Since the domain server needs to be exposed with an HTTPS address and the domain
 3. Modify `docker-compose.yml` to set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Posemesh Console.
 4. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
 5. Configure the wallet private key to use. See [Configuration](docs/configuration.md).
-6. With the YAML file in the same folder, start the containers using Docker Compose: `docker-compose up -d`
+6. With the YAML file in the same folder, start the containers using Docker Compose: `docker compose up -d`
 
 Just as with the pure Docker setup, we recommend you configure Docker to start automatically with your operating system. If you use our standard Docker Compose YAML file, the containers will start automatically after the Docker daemon has started.
 
@@ -35,9 +35,9 @@ Just as with the pure Docker setup, we recommend you configure Docker to start a
 
 #### Upgrading
 
-You can do the same steps as for Docker, but if you're not already running a domain server or you have modified the `docker-compose.yml` file recently and want to deploy the changes, you can navigate to the folder where you have your `docker-compose.yml` file and then run `docker-compose pull` followed by `docker-compose down` and `docker-compose up -d`.
+You can do the same steps as for Docker, but if you're not already running a domain server or you have modified the `docker-compose.yml` file recently and want to deploy the changes, you can navigate to the folder where you have your `docker-compose.yml` file and then run `docker compose pull` followed by `docker compose down` and `docker compose up -d`.
 
-Note that the `docker-compose pull` command will also upgrade the other containers defined in `docker-compose.yml` such as the nginx proxy and the Let's Encrypt helper.
+Note that the `docker compose pull` command will also upgrade the other containers defined in `docker-compose.yml` such as the nginx proxy and the Let's Encrypt helper.
 
 ### Binary
 
