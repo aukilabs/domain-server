@@ -36,4 +36,4 @@ chmod 600 domain-server-private.key
 
 We recommend that the private key is supplied as a file (`DS_WALLET_PRIVATE_KEY_FILE_PATH`) rather than directly on the command line or through environment variables (`DS_WALLET_PRIVATE_KEY`) as files are more secure.
 
-**DO NOT CONFIGURE A WALLET WITH EXISTING ASSETS**, instead generate a new wallet for every domain server server you operate. The private key of your wallet is only used by the domain server for authentication and verification of your reputation deposit and will stay on your machine. But if someone gains access to the private key file on your server, they will get access to your wallet, so please take appropriate precautions.
+**DO NOT CONFIGURE A WALLET WITH EXISTING ASSETS**, instead generate a new wallet for every domain server you operate. The private key of your wallet is only used by the domain server for authentication and verification of your reputation deposit and will stay on your machine. But if someone gains access to the private key file on your server, they will get access to your wallet, so please take appropriate precautions.
