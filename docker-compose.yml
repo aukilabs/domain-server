@@ -47,17 +47,17 @@ services:
       - ./domain-server/domain-data:/app/data/domain-data
       - ./domain-server-private.key:/domain-server-private.key:ro
     environment:
-      - VIRTUAL_HOST=domains.example.com
-      - VIRTUAL_PORT=4000
-      - LETSENCRYPT_HOST=domains.example.com
-      - DS_POSTGRES_URL=postgres://test:test@postgres/domain-server?sslmode=disable
-      - DS_OPERATION_MODE=dedicated
-      - DS_LOG_LEVEL=info
-      - DS_ADDR=:4000
-      - DS_PUBLIC_URL=https://domains.example.com
-      - DS_REGISTRATION_CREDENTIALS=copy_from_console
-      - DS_STORAGE_LOCAL_PATH=/app/data/domain-data
-      - DS_WALLET_PRIVATE_KEY_FILE_PATH=/domain-server-private.key
+      VIRTUAL_HOST: domains.example.com
+      VIRTUAL_PORT: "4000"
+      LETSENCRYPT_HOST: domains.example.com
+      DS_POSTGRES_URL: "postgres://test:test@postgres/domain-server?sslmode=disable"
+      DS_OPERATION_MODE: dedicated
+      DS_LOG_LEVEL: info
+      DS_ADDR: ":4000"
+      DS_PUBLIC_URL: https://domains.example.com
+      DS_REGISTRATION_CREDENTIALS: "copy_from_console"
+      DS_STORAGE_LOCAL_PATH: /app/data/domain-data
+      DS_WALLET_PRIVATE_KEY_FILE_PATH: /domain-server-private.key
 volumes:
   conf:
   vhost:
