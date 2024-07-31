@@ -38,11 +38,20 @@ services:
       interval: 1s
       timeout: 5s
       retries: 5
+  change-data-folder-ownership:
+    image: busybox:stable-musl
+    user: root
+    volumes:
+      - ./domain-server/domain-data:/tmp/volume
+    command: chown -R 100:101 /tmp/volume
   domain-server:
     image: aukilabs/domain-server:stable
     restart: unless-stopped
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+      change-data-folder-ownership:
+        condition: service_completed_successfully
     volumes:
       - ./domain-server/domain-data:/app/data/domain-data
       - ./domain-server-private.key:/domain-server-private.key:ro
@@ -50,15 +59,15 @@ services:
       VIRTUAL_HOST: example.com
       VIRTUAL_PATH: /domains/
       VIRTUAL_DEST: /
-      VIRTUAL_PORT: 4000
+      VIRTUAL_PORT: "4000"
       LETSENCRYPT_HOST: example.com
-      DS_POSTGRES_URL: postgres://test:test@postgres/domain-server?sslmode=disable
+      DS_POSTGRES_URL: "postgres://test:test@postgres/domain-server?sslmode=disable"
       DS_OPERATION_MODE: dedicated
       DS_LOG_LEVEL: info
-      DS_ADDR: :4000
+      DS_ADDR: ":4000"
       DS_PUBLIC_URL: https://example.com/domains
-      DS_REGISTRATION_CREDENTIALS: copy_from_console
-      DS_STORAGE_LOCAL_PATH: "/app/data/domain-data"
+      DS_REGISTRATION_CREDENTIALS: "copy_from_console"
+      DS_STORAGE_LOCAL_PATH: /app/data/domain-data
       DS_WALLET_PRIVATE_KEY_FILE_PATH: /domain-server-private.key
   hagall:
     image: aukilabs/hagall:stable
