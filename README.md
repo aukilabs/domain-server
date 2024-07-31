@@ -19,11 +19,12 @@
 Since the domain server needs to be exposed with an HTTPS address and the domain server itself doesn't terminate HTTPS, instead of using the pure Docker setup as described below, we recommend you to use our Docker Compose file that sets up an `nginx-proxy` container that terminates HTTPS and a `letsencrypt` container that obtains a free Let's Encrypt SSL certificate alongside the domain server.
 
 1. Configure your domain name to point to your externally exposed public IP address and configure any firewalls and port forwarding rules to allow incoming traffic to ports 80 and 443.
-2. Clone/[download](https://github.com/aukilabs/domains/archive/refs/heads/main.zip) this repository or download the Docker Compose YAML [file](https://raw.githubusercontent.com/aukilabs/domains/main/docker-compose.yml) and [`client_max_body_size.conf`](https://raw.githubusercontent.com/aukilabs/domains/main/client_max_body_size.conf) separately.
+2. Clone or [download](https://github.com/aukilabs/domains/archive/refs/heads/main.zip) this repository or download the Docker Compose YAML [file](https://raw.githubusercontent.com/aukilabs/domains/main/docker-compose.yml) and [`client_max_body_size.conf`](https://raw.githubusercontent.com/aukilabs/domains/main/client_max_body_size.conf) separately.
 3. Modify `docker-compose.yml` to set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Posemesh Console.
-4. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
-5. Configure the wallet private key to use. See [Configuration](docs/configuration.md).
-6. With the YAML file in the same folder, start the containers using Docker Compose: `docker compose up -d`
+4. Change the `POSTGRES_USER`, `POSTGRES_PASSWORD` and `DS_POSTGRES_URL` environment variables with a new username and a random password of at least 24 characters. If you want to know how to generate a random password, you can check out the [Generating random passwords](#generating-random-passwords) section.
+5. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
+6. Configure the wallet private key to use. See [Configuration](docs/configuration.md).
+7. With the YAML file in the same folder, start the containers using Docker Compose: `docker compose up -d`
 
 Just as with the pure Docker setup, we recommend you configure Docker to start automatically with your operating system. If you use our standard Docker Compose YAML file, the containers will start automatically after the Docker daemon has started.
 
@@ -94,6 +95,22 @@ _See the full list on [Docker Hub](https://hub.docker.com/r/aukilabs/domain-serv
 If you're using a non-version specific tag (`stable` or `latest`) or if the version tag you use matches the new version of the domain server you want to upgrade to, simply run `docker pull aukilabs/domain-server:stable` (where `stable` is the tag you use) and then restart your container with `docker restart domain-server` (if `domain-server` is the name of your container).
 
 If you're using a version-specific tag and the new version of the domain server you want to upgrade to doesn't match the tag you use, you need to first change the tag you use and then restart your container. (`v0` matches any v0.x.x version, `v0.5` matches any v0.5.x version, and so on.)
+
+## Generating random passwords
+
+To generate a random password you can use one of the following commands in Linux or Mac terminal:
+
+```
+openssl rand -base64 64 | tr -dc A-Za-z0-9 | head -c 24
+```
+
+```
+cat /dev/urandom | base64 | tr -dc A-Za-z0-9 | head -c24
+```
+
+This will first generate a random string encoded in base64, then run it through `tr` command to leave only alphanumeric characters and then use `head` command to cut the string to 24 characters.
+
+To generate a random password, you can also use one of the password manager apps like Bitwarden, Lastpass, 1Password etc. which have built-in random password generators. You can usually pick what type of characters and how many you want the generated password to include. We recommend to include lowercase letters, uppercase letter and numbers, and generate a password of at least 24 characters.
 
 ## Additional Documentation
 
