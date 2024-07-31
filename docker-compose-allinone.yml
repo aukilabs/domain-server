@@ -38,11 +38,20 @@ services:
       interval: 1s
       timeout: 5s
       retries: 5
+  change-data-folder-ownership:
+    image: busybox:stable-musl
+    user: root
+    volumes:
+      - ./domain-server/domain-data:/tmp/volume
+    command: chown -R 100:101 /tmp/volume
   domain-server:
     image: aukilabs/domain-server:stable
     restart: unless-stopped
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+      change-data-folder-ownership:
+        condition: service_completed_successfully
     volumes:
       - ./domain-server/domain-data:/app/data/domain-data
       - ./domain-server-private.key:/domain-server-private.key:ro
