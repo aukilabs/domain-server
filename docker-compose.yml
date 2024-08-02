@@ -30,11 +30,11 @@ services:
     volumes:
       - ./domain-server/postgres-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
+      POSTGRES_USER: domain-server
+      POSTGRES_PASSWORD: changeme
       POSTGRES_DB: domain-server
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U test -d domain-server" ]
+      test: [ "CMD-SHELL", "pg_isready -U domain-server -d domain-server" ]
       interval: 1s
       timeout: 5s
       retries: 5
@@ -59,7 +59,7 @@ services:
       VIRTUAL_HOST: domains.example.com
       VIRTUAL_PORT: "4000"
       LETSENCRYPT_HOST: domains.example.com
-      DS_POSTGRES_URL: "postgres://test:test@postgres/domain-server?sslmode=disable"
+      DS_POSTGRES_URL: "postgres://domain-server:test@postgres/domain-server?sslmode=disable"
       DS_OPERATION_MODE: dedicated
       DS_LOG_LEVEL: info
       DS_ADDR: ":4000"
