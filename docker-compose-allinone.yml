@@ -31,7 +31,7 @@ services:
       - ./domain-server/postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: domain-server
-      POSTGRES_PASSWORD: changeme
+      POSTGRES_PASSWORD: CHANGE_ME
       POSTGRES_DB: domain-server
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U domain-server -d domain-server" ]
@@ -61,12 +61,12 @@ services:
       VIRTUAL_DEST: /
       VIRTUAL_PORT: "4000"
       LETSENCRYPT_HOST: example.com
-      DS_POSTGRES_URL: "postgres://domain-server:test@postgres/domain-server?sslmode=disable"
+      DS_POSTGRES_URL: "postgres://domain-server:CHANGE_ME@postgres/domain-server?sslmode=disable"
       DS_OPERATION_MODE: dedicated
       DS_LOG_LEVEL: info
       DS_ADDR: ":4000"
       DS_PUBLIC_URL: https://example.com/domains
-      DS_REGISTRATION_CREDENTIALS: "copy_from_console"
+      DS_REGISTRATION_CREDENTIALS: "COPY_FROM_POSEMESH_CONSOLE"
       DS_STORAGE_LOCAL_PATH: /app/data/domain-data
       DS_WALLET_PRIVATE_KEY_FILE_PATH: /domain-server-private.key
   hagall:
