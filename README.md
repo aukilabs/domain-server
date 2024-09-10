@@ -19,7 +19,7 @@
 Since the domain server needs to be exposed with an HTTPS address and the domain server itself doesn't terminate HTTPS, instead of using the pure Docker setup as described below, we recommend you to use our Docker Compose file that sets up an `nginx-proxy` container that terminates HTTPS and a `letsencrypt` container that obtains a free Let's Encrypt SSL certificate alongside the domain server.
 
 1. Configure your domain name to point to your externally exposed public IP address and configure any firewalls and port forwarding rules to allow incoming traffic to ports 80 and 443.
-2. Clone or [download](https://github.com/aukilabs/domains/archive/refs/heads/main.zip) this repository or download the Docker Compose YAML [file](https://raw.githubusercontent.com/aukilabs/domains/main/docker-compose.yml) and [`client_max_body_size.conf`](https://raw.githubusercontent.com/aukilabs/domains/main/client_max_body_size.conf) separately.
+2. Clone or [download](https://github.com/aukilabs/domain-server/archive/refs/heads/main.zip) this repository or download the Docker Compose YAML [file](https://raw.githubusercontent.com/aukilabs/domain-server/main/docker-compose.yml) and [`client_max_body_size.conf`](https://raw.githubusercontent.com/aukilabs/domain-server/main/client_max_body_size.conf) separately.
 3. Modify `docker-compose.yml` to set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Posemesh Console.
 4. Change the `POSTGRES_PASSWORD` and `DS_POSTGRES_URL` environment variables to use a random password of at least 24 characters. If you want to know how to generate a random password, you can check out the [Generating random passwords](#generating-random-passwords) section. The password must be the same in both environment variables so the domain server can authenticate with PostgreSQL.
 5. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
@@ -56,7 +56,7 @@ We build pre-compiled binaries for these operating systems and architectures:
 
 > **_NOTE:_** Auki Labs doesn't test all of these platforms actively. Windows, FreeBSD and Solaris builds are currently experimental. We don't guarantee that everything works but feel free to reach out with your test results.
 
-1. Download the latest version of the domain server from [GitHub](https://github.com/aukilabs/domains/releases).
+1. Download the latest version of the domain server from [GitHub](https://github.com/aukilabs/domain-server/releases).
 2. Run it with `./ds --public-url=https://domains.example.com --registration-credentials=xxx`
 3. Expose it using your own reverse proxy with an SSL certificate.
 
