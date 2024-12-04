@@ -9,7 +9,9 @@ Every server needs a unique wallet to participate in the [posemesh economy](http
 - Dedicated: only people from your organization can save their data to your server, but anyone will be able to read.
 
 ## Documentation
+- [Video Tutorial](docs/video-tutorial.md)
+- [Server Operator's Manual](docs/operator-manual.md)
 - [Minimum Requirements](docs/minimum-requirements.md)
-- [Configuration](docs/configuration.md)
 - [Deployment](docs/deployment.md)
+- [Configuration](docs/configuration.md)
 
