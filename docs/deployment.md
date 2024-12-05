@@ -128,7 +128,7 @@ Please see [values.yaml](https://github.com/aukilabs/helm-charts/blob/main/chart
 
 Values can be overridden either by using a values file (the `-f` or `--values` flags) or by setting them on the command line using the `--set` flag. For more information, see the official [documentation](https://helm.sh/docs/helm/helm_install/).
 
-You must at least set the `envVars.DS_PUBLIC_URL` key for server registration to work. Depending on which ingress controller you use, you may also need to set `ingress.enabled=true`, `ingress.hosts[0].host=domain-server.example.com` and so on. You also need to configure a secret containing the private key of your Domain server-exclusive wallet, one per Domain server, either using an existing secret inside Kubernetes or by passing the wallet as a file, letting the chart create the Kubernetes secret for you. If you want to use an existing secret, set `useExistingSecrets=true` and `existingSecretName` to the name of the secret you want to use.
+You must at least set the `envVars.DS_PUBLIC_URL` key for server registration to work. Depending on which ingress controller you use, you may also need to set `ingress.enabled=true`, `ingress.hosts[0]=domain-server.example.com`, `ingress.tls[0].hosts[0]` and so on. You also need to configure a secret containing the private key of your Domain server-exclusive wallet, one per Domain server, either using an existing secret inside Kubernetes or by passing the wallet as a file, letting the chart create the Kubernetes secret for you. If you want to use an existing secret, set `useExistingSecrets=true` and `existingSecretName` to the name of the secret you want to use.
 
 #### Upgrading
 
