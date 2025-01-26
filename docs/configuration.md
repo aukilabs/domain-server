@@ -2,7 +2,7 @@
 
 Configuration parameters can be passed to domain server either as environment variables or flags.
 
-`./ds --public-url https://domains.example.com --regstration-credentials` (where `https://domains.example.com` is the public, external address where this domain server server is reachable) will launch domain server with sane defaults, but if you for some reason want to modify the default configuration of the domain server, here are the configurations you can customize:
+`./ds --public-url https://domains.example.com --registration-credentials` (where `https://domains.example.com` is the public, external address where this domain server server is reachable) will launch domain server with sane defaults, but if you for some reason want to modify the default configuration of the domain server, here are the configurations you can customize:
 
 | Flag                          | Environment Variable            | Default                        | Example                            | Description                                                                                                                                                                                 |
 |------------------------------|---------------------------------|--------------------------------|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
