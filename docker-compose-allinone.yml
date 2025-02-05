@@ -62,7 +62,6 @@ services:
       VIRTUAL_PORT: "4000"
       LETSENCRYPT_HOST: example.com
       DS_POSTGRES_URL: "postgres://domain-server:CHANGE_ME@postgres/domain-server?sslmode=disable"
-      DS_OPERATION_MODE: dedicated
       DS_LOG_LEVEL: info
       DS_ADDR: ":4000"
       DS_PUBLIC_URL: https://example.com/domains
