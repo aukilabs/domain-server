@@ -56,7 +56,7 @@ services:
       - ./domain-server/domain-data:/app/data/domain-data
       - ./domain-server-private.key:/domain-server-private.key:ro
     labels:
-      com.github.nginx-proxy.nginx-proxy.keepalive: 500
+      com.github.nginx-proxy.nginx-proxy.keepalive: 20
     environment: 
       VIRTUAL_HOST: example.com
       VIRTUAL_PATH: /domains/
