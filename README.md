@@ -14,4 +14,4 @@ Every server needs a unique wallet to participate in the [posemesh economy](http
 - [Minimum Requirements](docs/minimum-requirements.md)
 - [Deployment](docs/deployment.md)
 - [Configuration](docs/configuration.md)
-
+- [Troubleshooting](docs/troubleshooting.md)

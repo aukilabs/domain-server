@@ -27,6 +27,7 @@ services:
       - NGINX_PROXY_CONTAINER=nginx-proxy
   postgres:
     image: postgres:16-alpine
+    restart: unless-stopped
     volumes:
       - ./domain-server/postgres-data:/var/lib/postgresql/data
     environment:
@@ -55,6 +56,8 @@ services:
     volumes:
       - ./domain-server/domain-data:/app/data/domain-data
       - ./domain-server-private.key:/domain-server-private.key:ro
+    labels:
+      com.github.nginx-proxy.nginx-proxy.keepalive: 20
     environment:
       VIRTUAL_HOST: domains.example.com
       VIRTUAL_PORT: "4000"
