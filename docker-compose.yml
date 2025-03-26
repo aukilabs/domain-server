@@ -58,6 +58,8 @@ services:
       - ./domain-server-private.key:/domain-server-private.key:ro
     labels:
       com.github.nginx-proxy.nginx-proxy.keepalive: 20
+    ports:
+      - 127.0.0.1:18191:18190
     environment:
       VIRTUAL_HOST: domains.example.com
       VIRTUAL_PORT: "4000"

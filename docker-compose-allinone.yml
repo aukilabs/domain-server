@@ -58,6 +58,8 @@ services:
       - ./domain-server-private.key:/domain-server-private.key:ro
     labels:
       com.github.nginx-proxy.nginx-proxy.keepalive: 20
+    ports:
+      - 127.0.0.1:18191:18190
     environment: 
       VIRTUAL_HOST: example.com
       VIRTUAL_PATH: /domains/
@@ -77,7 +79,7 @@ services:
     volumes:
       - ./hagall-private.key:/hagall-private.key:ro
     ports:
-      - 18190:18190
+      - 127.0.0.1:18190:18190
     environment:
       VIRTUAL_HOST: example.com
       VIRTUAL_PORT: 8080
