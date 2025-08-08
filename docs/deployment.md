@@ -7,6 +7,29 @@
 4. Make sure you have copied the registration credentials. You will need them for the domain server configuration.
 5. On the Staking page, connect your wallet and stake the correct amount of $AUKI tokens based on your intended operation mode (dedicated or public).
 
+## Storage Options
+Domain Server supports two types of domain data storage backends:
+
+* **Local filesystem** (default)
+* **S3-compatible object/blob storage**
+
+When using **S3 storage**, the domain server becomes **horizontally scalable** — multiple instances can be deployed concurrently to handle more traffic and increase fault tolerance, since the domain data is no longer bound to a single machine's disk.
+
+To enable S3 storage, set the following environment variables:
+
+```env
+DS_STORAGE_TYPE=s3
+DS_STORAGE_S3_BUCKET=your-bucket-name
+DS_STORAGE_S3_REGION=your-region
+DS_STORAGE_S3_ACCESS_KEY=your-access-key
+DS_STORAGE_S3_SECRET_KEY=your-secret-key
+DS_STORAGE_S3_BASE_ENDPOINT=https://s3.your-provider.com
+```
+
+You can switch between local and S3 backends at any time.
+
+> ✅ A **migration utility** is provided to **copy data from local filesystem to S3** (or the other way around). See [Storage Migration](#storage-migration) below.
+
 ## Deployment Methods
 
 - [Docker Compose](#docker-compose)
@@ -134,6 +157,43 @@ You must at least set the `envVars.DS_PUBLIC_URL` key for server registration to
 #### Upgrading
 
 We recommend you change to use `image.pullPolicy: Always` if you use a non-specific version tag like `stable`/`v0`/`v0.5` (configured by changing the `image.tag` value of the Helm chart) or choose to use a specific version tag like `v0.5.0`. Check *Supported tags* or the *Tags* tab on [Docker Hub](https://hub.docker.com/r/aukilabs/domain-server) for the tags you can use.
+
+## Storage Migration
+
+
+
+To migrate your domain data between **local filesystem** and **S3**, the domain server includes a CLI command:
+
+```bash
+./ds migrate-storage
+```
+
+This will:
+
+* Connect to the Postgres database to list all domain data metadata.
+* Copy domain data blobs from the **current backend** (determined by `DS_STORAGE_TYPE`) to the **other backend**.
+
+    * If `DS_STORAGE_TYPE=s3`, it will copy **from local FS → S3**
+    * If `DS_STORAGE_TYPE=local`, it will copy **from S3 → local FS**
+
+**Important:**
+- The domain server must be shutdown before running the migration command to ensure no data loss.
+- Make sure to configure all required environment variables (both S3 access and path settings) before running the command.
+- The database must be configured and running.
+
+### Example:
+
+```bash
+DS_POSTGRES_URL=postgres://user:pass@host:5432/db \
+DS_STORAGE_LOCAL_PATH=./volume \
+DS_STORAGE_TYPE=s3 \
+DS_STORAGE_S3_BUCKET=my-bucket \
+DS_STORAGE_S3_REGION=ap-southeast-1 \
+DS_STORAGE_S3_ACCESS_KEY=AKIA... \
+DS_STORAGE_S3_SECRET_KEY=abcd1234 \
+DS_STORAGE_S3_BASE_ENDPOINT=https://s3.my-provider.com \
+./ds migrate-storage
+```
 
 ## Generating random passwords
 
