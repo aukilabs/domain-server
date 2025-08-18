@@ -171,7 +171,7 @@ To migrate your domain data between **local filesystem** and **S3**, the domain 
 This will:
 
 * Connect to the Postgres database to list all domain data metadata.
-* Copy domain data blobs from the **current backend** (determined by `DS_STORAGE_TYPE`) to the **other backend**.
+* Copy domain data blobs to the **desired backend** (determined by `DS_STORAGE_TYPE`) from the **other backend** .
 
     * If `DS_STORAGE_TYPE=s3`, it will copy **from local FS → S3**
     * If `DS_STORAGE_TYPE=local`, it will copy **from S3 → local FS**
