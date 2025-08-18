@@ -26,6 +26,8 @@ DS_STORAGE_S3_SECRET_KEY=your-secret-key
 DS_STORAGE_S3_BASE_ENDPOINT=https://s3.your-provider.com
 ```
 
+For more information on the S3 storage configuration, see [AWS SDK Configuration](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/configure-gosdk.html).
+
 You can switch between local and S3 backends at any time.
 
 > ✅ A **migration utility** is provided to **copy data from local filesystem to S3** (or the other way around). See [Storage Migration](#storage-migration) below.
