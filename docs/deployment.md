@@ -188,7 +188,7 @@ This will:
 ```bash
 DS_POSTGRES_URL=postgres://user:pass@host:5432/db \
 DS_STORAGE_LOCAL_PATH=./volume \
-DS_STORAGE_TYPE=s3 \
+DS_STORAGE_TYPE=s3 \ # migrating to S3 storage
 DS_STORAGE_S3_BUCKET=my-bucket \
 DS_STORAGE_S3_REGION=ap-southeast-1 \
 DS_STORAGE_S3_ACCESS_KEY=AKIA... \
@@ -196,6 +196,10 @@ DS_STORAGE_S3_SECRET_KEY=abcd1234 \
 DS_STORAGE_S3_BASE_ENDPOINT=https://s3.my-provider.com \
 ./ds migrate-storage
 ```
+
+When migrating storage backend, you must ensure that both are configured and accessible. 
+The easiest way is by running migration command inside the same container as the domain server, so it has access to the same environment variables and database connection.
+Configure environment variable for the new storage backend and set storage type to `local` or `s3` before running the command.
 
 ## Generating random passwords
 
