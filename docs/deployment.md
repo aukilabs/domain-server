@@ -177,7 +177,7 @@ This will:
     * If `DS_STORAGE_TYPE=local`, it will copy **from S3 → local FS**
 
 **Important:**
-- The domain server must be shutdown before running the migration command to ensure no data loss.
+- The domain server must be shut down before running the migration command to ensure no data loss.
 - Make sure to configure all required environment variables (both S3 access and path settings) before running the command.
 - The database must be configured and running.
 
