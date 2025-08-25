@@ -26,7 +26,7 @@ DS_STORAGE_S3_SECRET_KEY=your-secret-key
 DS_STORAGE_S3_BASE_ENDPOINT=https://s3.your-provider.com
 ```
 
-For more information on the S3 storage configuration, see [AWS SDK Configuration](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/configure-gosdk.html).
+For more information on the S3 storage configuration, see [AWS SDK Configuration](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/configure-gosdk.html) and [S3 Reference Guide](https://docs.aws.amazon.com/general/latest/gr/s3.html).
 
 You can switch between local and S3 backends at any time.
 
@@ -161,8 +161,6 @@ You must at least set the `envVars.DS_PUBLIC_URL` key for server registration to
 We recommend you change to use `image.pullPolicy: Always` if you use a non-specific version tag like `stable`/`v0`/`v0.5` (configured by changing the `image.tag` value of the Helm chart) or choose to use a specific version tag like `v0.5.0`. Check *Supported tags* or the *Tags* tab on [Docker Hub](https://hub.docker.com/r/aukilabs/domain-server) for the tags you can use.
 
 ## Storage Migration
-
-
 
 To migrate your domain data between **local filesystem** and **S3**, the domain server includes a CLI command:
 
