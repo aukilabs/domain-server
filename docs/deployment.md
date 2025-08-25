@@ -1,7 +1,7 @@
 # Deployment
 
 ## Create Server
-1. Log into the Posemesh Console at https://console.posemesh.org/
+1. Log into the Posemesh Console at https://console.auki.network/
 2. Open the `Domain Servers` page and create a server. 
 3. Set the operation mode of the domain server. `Redirect URL` is optional; it's the URL you want to redirect users to when they scan a portal using a non-Posemesh SDK app. This value can be overwritten by specifying redirect URLs for domains hosted by this domain server or for portals within the domains. If empty, https://aukilabs.com will be used by default.
 4. Make sure you have copied the registration credentials. You will need them for the domain server configuration.
@@ -23,7 +23,7 @@ DS_STORAGE_S3_BUCKET=your-bucket-name
 DS_STORAGE_S3_REGION=your-region
 DS_STORAGE_S3_ACCESS_KEY=your-access-key
 DS_STORAGE_S3_SECRET_KEY=your-secret-key
-DS_STORAGE_S3_BASE_ENDPOINT=https://s3.your-provider.com
+DS_STORAGE_S3_BASE_ENDPOINT=https://s3.your-region.amazonaws.com
 ```
 
 For more information on the S3 storage configuration, see [AWS SDK Configuration](https://docs.aws.amazon.com/sdk-for-go/v2/developer-guide/configure-gosdk.html) and [S3 Reference Guide](https://docs.aws.amazon.com/general/latest/gr/s3.html).
