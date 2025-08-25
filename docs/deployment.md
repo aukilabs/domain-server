@@ -197,9 +197,9 @@ DS_STORAGE_S3_BASE_ENDPOINT=https://s3.my-provider.com \
 ./ds migrate-storage
 ```
 
-When migrating storage backend, you must ensure that both are configured and accessible. 
-The easiest way is by running migration command inside the same container as the domain server, so it has access to the same environment variables and database connection.
-Configure environment variable for the new storage backend and set storage type to `local` or `s3` before running the command.
+When migrating storage backends, you must ensure that both are configured and accessible. 
+The easiest way is to run the migration command inside the same container as the domain server, so it has access to the same environment variables and the database connection.
+Configure environment variables for the new storage backend and set the storage type to `local` or `s3` before running the command.
 
 ## Generating random passwords
 
