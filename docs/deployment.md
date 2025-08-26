@@ -48,7 +48,7 @@ Since the domain server needs to be exposed with an HTTPS address and the domain
 3. Modify `docker-compose.yml` to set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Posemesh Console.
 4. Change the `POSTGRES_PASSWORD` and `DS_POSTGRES_URL` environment variables to use a random password of at least 24 characters. If you want to know how to generate a random password, you can check out the [Generating random passwords](#generating-random-passwords) section. The password must be the same in both environment variables so the domain server can authenticate with PostgreSQL.
 5. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
-6. Configure the wallet private key to use. See [Configuration](docs/configuration.md).
+6. Configure the wallet private key to use. See [Configuration](/docs/configuration.md).
 7. With the YAML file in the same folder, start the containers using Docker Compose: `docker compose up -d`
 
 Just as with the pure Docker setup, we recommend you configure Docker to start automatically with your operating system. If you use our standard Docker Compose YAML file, the containers will start automatically after the Docker daemon has started.
