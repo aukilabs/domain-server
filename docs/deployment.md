@@ -266,6 +266,14 @@ POD=$(kubectl get pods -n <namespace> -l app.kubernetes.io/instance=<release-nam
 
 # Execute the storage migration (filesystem → S3 since DS_STORAGE_TYPE=s3)
 kubectl exec -n <namespace> -it "$POD" -- /app/ds migrate-storage
+# Example log output:
+- INFO migrating: filesystem → S3
+- INFO found metadata entries count=3
+- INFO migrating item domainID=6b6f1a4a-2bbd-4f1d-9b8e-2d3f2c6a1d11 dataID=ab12cd34-ef56-7890-ab12-cd34ef567890 index=1 total=3
+- INFO migrating item domainID=6b6f1a4a-2bbd-4f1d-9b8e-2d3f2c6a1d11 dataID=de98fa76-bc54-3210-de98-fa76bc543210 index=2 total=3
+- INFO migrating item domainID=9f2c6a1d-6b6f-1a4a-2bbd-4f1d9b8e2d3f dataID=00112233-4455-6677-8899-aabbccddeeff index=3 total=3
+- INFO storage migration complete
+
 ```
 
 5) Scale back to 0
