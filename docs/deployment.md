@@ -15,6 +15,15 @@ Domain Server supports two types of domain data storage backends:
 
 When using **S3 storage**, the domain server becomes **horizontally scalable** — multiple instances can be deployed concurrently to handle more traffic and increase fault tolerance, since the domain data is no longer bound to a single machine's disk.
 
+Important for multi-pod deployments: set a shared processing token key across all replicas to avoid per-pod key generation and cross-pod verification failures.
+
+```env
+# Required when running multiple pods
+DS_PROCESSING_TOKEN_PRIVATE_KEY=<hex-encoded-private-key>
+```
+
+note: you can generate an ES256 key pair using `openssl ecparam -name prime256v1 -genkey -noout`
+
 To enable S3 storage, set the following environment variables:
 
 ```env
@@ -198,6 +207,88 @@ DS_STORAGE_S3_BASE_ENDPOINT=https://s3.my-provider.com \
 When migrating storage backends, you must ensure that both are configured and accessible. 
 The easiest way is to run the migration command inside the same container as the domain server, so it has access to the same environment variables and the database connection.
 Configure environment variables for the new storage backend and set the storage type to `local` or `s3` before running the command.
+
+### Kubernetes: Filesystem → S3
+
+Filesystem to S3 migration with a Kubernetes StatefulSet.
+
+Prerequisites:
+- Ensure the S3 bucket and credentials exist and are reachable from the cluster.
+- Confirm the pod can access the previous local data path (`DS_STORAGE_LOCAL_PATH`) via a mounted volume.
+  - Default in our examples is `/app/data/domain-data` unless overridden.
+- The domain-server container image has the binary at `/app/ds`.
+- The Postgres database (`DS_POSTGRES_URL`) remains reachable during migration.
+
+Steps:
+
+1) Scale the StatefulSet to 0 (stop the server)
+
+```bash
+kubectl scale statefulset <statefulset-name> -n <namespace> --replicas=0
+```
+
+2) Patch the StatefulSet to idle and set S3 env
+- Replace the container command to keep the pod running without starting the server.
+- Set S3 config and storage type to `s3`.
+- Ensure `DS_STORAGE_LOCAL_PATH` matches your PV mount path.
+
+```bash
+# Set the command to sleep (override entrypoint)
+kubectl patch statefulset <statefulset-name> -n <namespace> \
+  --type='json' \
+  -p='[{"op":"replace","path":"/spec/template/spec/containers/0/command","value":["/bin/sh","-c","sleep infinity"]}]'
+
+# Set env vars for S3 and migration
+kubectl set env statefulset/<statefulset-name> -n <namespace> \
+  DS_STORAGE_TYPE=s3 \
+  DS_STORAGE_S3_BUCKET=<your-bucket> \
+  DS_STORAGE_S3_REGION=<your-region> \
+  DS_STORAGE_S3_BASE_ENDPOINT=<http-or-https-endpoint-if-applicable> \
+  DS_STORAGE_S3_ACCESS_KEY=<your-access-key> \
+  DS_STORAGE_S3_SECRET_KEY=<your-secret-key>
+```
+
+3) Scale the StatefulSet to 1 (start an idle pod)
+
+```bash
+kubectl scale statefulset <statefulset-name> -n <namespace> --replicas=1
+kubectl rollout status statefulset/<statefulset-name> -n <namespace>
+```
+
+4) Run the migration inside the pod
+
+```bash
+# If you installed via Helm, this usually works:
+POD=$(kubectl get pods -n <namespace> -l app.kubernetes.io/instance=<release-name>,app.kubernetes.io/name=domain-server -o jsonpath='{.items[0].metadata.name}')
+
+# Alternatively use <statefulset-name>-0
+# POD=<statefulset-name>-0
+
+# Execute the storage migration (filesystem → S3 since DS_STORAGE_TYPE=s3)
+kubectl exec -n <namespace> -it "$POD" -- /app/ds migrate-storage
+```
+
+5) Scale back to 0
+
+```bash
+kubectl scale statefulset <statefulset-name> -n <namespace> --replicas=0
+```
+
+6) Apply the Helm chart configured for S3
+- Restore the normal container command by upgrading to your chart values.
+- Keep `DS_STORAGE_TYPE=s3` and S3 env values in your chart values moving forward.
+
+```bash
+helm upgrade --install <release-name> aukilabs/domain-server \
+  -n <namespace> -f <your-values-for-s3>.yaml
+```
+
+Notes:
+- Direction is decided by `DS_STORAGE_TYPE`:
+  - `s3` migrates filesystem → S3.
+  - `local` migrates S3 → filesystem.
+- The command needs DB and both storage configs present (Postgres URL, `DS_STORAGE_LOCAL_PATH`, and S3 credentials).
+- Migration copies data and does not delete it. Verify integrity before removing the old local PV data.
 
 ## Generating random passwords
 
