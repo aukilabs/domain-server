@@ -285,8 +285,8 @@ helm upgrade --install <release-name> aukilabs/domain-server \
 
 Notes:
 - Direction is decided by `DS_STORAGE_TYPE`:
-  - `s3` migrates filesystem → S3.
-  - `local` migrates S3 → filesystem.
+  - `s3` migrates local filesystem → S3.
+  - `local` migrates S3 → local filesystem.
 - The command needs DB and both storage configs present (Postgres URL, `DS_STORAGE_LOCAL_PATH`, and S3 credentials).
 - Migration copies data and does not delete it. Verify integrity before removing the old local PV data.
 
