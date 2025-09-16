@@ -101,33 +101,32 @@ Set the following environment variables for your Domain Server:
 Below is an example configuration for deploying the Domain Server with JuiceFS S3 Gateway:
 
 ```yaml
-domain-server:
-   # other configuration ...
-  applicationName: domain-server-s3
-  replicaCount: 3 # horizontal scaling supported
+applicationName: domain-server-s3
+replicaCount: 3 # horizontal scaling supported
+# other configuration ...
 
-  secrets:
-     # other secrets ...
-    juicefs-secret: # inject DS storage credentials from juicefs-secret
-      as: environment
-      items:
-        access-key:
-          envVarName: DS_STORAGE_S3_ACCESS_KEY
-        secret-key:
-          envVarName: DS_STORAGE_S3_SECRET_KEY
+secrets:
+   # other secrets ...
+  juicefs-secret: # inject DS storage credentials from juicefs-secret
+    as: environment
+    items:
+      access-key:
+        envVarName: DS_STORAGE_S3_ACCESS_KEY
+      secret-key:
+        envVarName: DS_STORAGE_S3_SECRET_KEY
 
-  juicefs-s3-gateway:
-    enabled: true
-    replicaCount: 3 # horizontal scaling recommended
-    secret:
-      enabled: false # create manually in production (helm chart hardcodes secret name to `juicefs-secret`)
+juicefs-s3-gateway:
+  enabled: true
+  replicaCount: 3 # horizontal scaling recommended
+  secret:
+    enabled: false # create manually in production (helm chart hardcodes secret name to `juicefs-secret`)
 
-  envVars:
-     # other env vars ...
-    DS_STORAGE_TYPE: "s3"
-    DS_STORAGE_S3_BUCKET: "domain-server"
-    DS_STORAGE_S3_REGION: "us-east-1"
-    DS_STORAGE_S3_BASE_ENDPOINT: "http://juicefs-s3-gateway:9000" # service DNS short name within same namespace
+envVars:
+   # other env vars ...
+  DS_STORAGE_TYPE: "s3"
+  DS_STORAGE_S3_BUCKET: "domain-server"
+  DS_STORAGE_S3_REGION: "us-east-1"
+  DS_STORAGE_S3_BASE_ENDPOINT: "http://juicefs-s3-gateway:9000" # service DNS short name within same namespace
 ```
 
 ### Create the JuiceFS Secret
