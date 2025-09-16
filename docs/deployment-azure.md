@@ -68,7 +68,7 @@ juicefs-s3-gateway:
   secret:
     enabled: true
     name: "<your-bucket-name>" # We recommend same as storage account
-    metaurl: "rediss://:<Primary key>@<redisName>.redis.cache.windows.net:6380/0"
+    metaurl: "rediss://:<Primary key>@<Redis name>.redis.cache.windows.net:6380/0"
     storage: "wasb"
     accessKey: "<Storage account name>"
     secretKey: "<Storage key>"
@@ -124,7 +124,7 @@ juicefs-s3-gateway:
 envVars:
    # other env vars ...
   DS_STORAGE_TYPE: "s3"
-  DS_STORAGE_S3_BUCKET: "domain-server"
+  DS_STORAGE_S3_BUCKET: "<your-bucket-name>"
   DS_STORAGE_S3_REGION: "us-east-1"
   DS_STORAGE_S3_BASE_ENDPOINT: "http://juicefs-s3-gateway:9000" # service DNS short name within same namespace
 ```
@@ -145,7 +145,7 @@ stringData:
   access-key: <Storage account name>
   secret-key: <Storage access key>
   bucket: https://<storage-account>.core.windows.net
-  metaurl: rediss://:<Primary key>@<redisName>.redis.cache.windows.net:6380/0
+  metaurl: rediss://:<Primary key>@<Redis name>.redis.cache.windows.net:6380/0
   name: <your-bucket-name>
   storage: wasb
   AZURE_STORAGE_CONNECTION_STRING: <Connection string>
