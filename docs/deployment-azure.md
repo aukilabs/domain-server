@@ -102,7 +102,8 @@ Below is an example configuration for deploying the Domain Server with JuiceFS S
 
 ```yaml
 applicationName: domain-server-s3
-replicaCount: 3 # horizontal scaling supported
+replicaCount: 3 # more than 1 recommended for high availability
+kind: Deployment
 # other configuration ...
 
 secrets:
@@ -117,7 +118,11 @@ secrets:
 
 juicefs-s3-gateway:
   enabled: true
-  replicaCount: 3 # horizontal scaling recommended
+  replicaCount: 3 # more than 1 recommended for high availability
+  image:
+     # Use ce-vX.X.X tags for JuiceFS CE
+     # Latest images: https://hub.docker.com/r/juicedata/mount
+     tag: "ce-v1.2.4"
   secret:
     enabled: false # create manually in production (helm chart hardcodes secret name to `juicefs-secret`)
 
