@@ -152,4 +152,4 @@ stringData:
 EOF
 ```
 
-**note:** You must respect key names as shown above case sensitively, as the JuiceFS S3 Gateway Helm chart expects these exact keys.
+**Note:** The keys inside `stringData` above are case-sensitive, don't change their casing.
