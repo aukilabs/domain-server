@@ -169,6 +169,9 @@ You must at least set the `envVars.DS_PUBLIC_URL` key for server registration to
 
 We recommend you change to use `image.pullPolicy: Always` if you use a non-specific version tag like `stable`/`v0`/`v0.5` (configured by changing the `image.tag` value of the Helm chart) or choose to use a specific version tag like `v0.5.0`. Check *Supported tags* or the *Tags* tab on [Docker Hub](https://hub.docker.com/r/aukilabs/domain-server) for the tags you can use.
 
+It's also a good idea to check if there are updates to the Helm chart before upgrading the Domain Server version.
+You can refer to the [latest releases](https://github.com/aukilabs/helm-charts/releases) and also the [README file](https://github.com/aukilabs/helm-charts/blob/main/charts/domain-server/README.md) that may contain upgrade instructions and information about potential breaking changes.
+
 ## Storage Migration
 
 To migrate your domain data between **local filesystem** and **S3**, the domain server includes a CLI command:
