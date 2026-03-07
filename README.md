@@ -2,7 +2,7 @@
 
 The Domain Server is responsible for storing poses of portals in domains and spatial domain data such as scene reconstructions and occupancy maps.
 
-Every server needs a unique wallet to participate in the [posemesh economy](https://www.aukilabs.com/posemesh/fundamentals).
+Every server needs a unique wallet to participate in the [posemesh economy](https://www.auki.com/posemesh/fundamentals).
 
 ## Operation Mode
 - Public: anyone can save data to your server. Auki Labs and the community are running public servers that anyone can use. You can find all servers on the Posemesh Console's `Domain Servers` page.
