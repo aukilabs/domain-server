@@ -2,10 +2,8 @@
 
 ## Create Server
 1. Log into the Posemesh Console at https://console.auki.network/
-2. Open the `Domain Servers` page and create a server. 
-3. Set the operation mode of the domain server. `Redirect URL` is optional; it's the URL you want to redirect users to when they scan a portal using a non-Posemesh SDK app. This value can be overwritten by specifying redirect URLs for domains hosted by this domain server or for portals within the domains. If empty, https://aukilabs.com will be used by default.
-4. Make sure you have copied the registration credentials. You will need them for the domain server configuration.
-5. On the Staking page, connect your wallet and stake the correct amount of $AUKI tokens based on your intended operation mode (dedicated or public).
+2. Open the `Manage Nodes` page and create a domain node following the instructions and start your domain node.
+3. Click the `Manage` button for that domain node, connect your wallet and stake the correct amount of $AUKI tokens based on your intended operation mode (dedicated or public).
 
 ## Storage Options
 Domain Server supports two types of domain data storage backends:
