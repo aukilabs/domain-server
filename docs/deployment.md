@@ -1,7 +1,7 @@
 # Deployment
 
 ## Create Server
-1. Log into the Posemesh Console at https://console.auki.network/
+1. Log into the Auki Console at https://console.auki.network/
 2. Open the `Manage Nodes` page and create a domain node following the instructions and start your domain node.
 3. Click the `Manage` button for that domain node, connect your wallet and stake the correct amount of $AUKI tokens based on your intended operation mode (dedicated or public).
 
