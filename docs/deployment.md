@@ -1,7 +1,7 @@
 # Deployment
 
 ## Create Server
-1. Log into the Posemesh Console at https://console.auki.network/
+1. Log in to the Auki Console at https://console.auki.network/
 2. Open the `Manage Nodes` page and create a domain node following the instructions and start your domain node.
 3. Click the `Manage` button for that domain node, connect your wallet and stake the correct amount of $AUKI tokens based on your intended operation mode (dedicated or public).
 
@@ -52,7 +52,7 @@ Since the domain server needs to be exposed with an HTTPS address and the domain
 
 1. Configure your domain name to point to your externally exposed public IP address and configure any firewalls and port forwarding rules to allow incoming traffic to ports 80 and 443.
 2. Clone or [download](https://github.com/aukilabs/domain-server/archive/refs/heads/main.zip) this repository or download the Docker Compose YAML [file](https://raw.githubusercontent.com/aukilabs/domain-server/main/docker-compose.yml) and [`client_max_body_size.conf`](https://raw.githubusercontent.com/aukilabs/domain-server/main/client_max_body_size.conf) separately.
-3. Modify `docker-compose.yml` to set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Posemesh Console.
+3. Modify `docker-compose.yml` to set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Auki Console.
 4. Change the `POSTGRES_PASSWORD` and `DS_POSTGRES_URL` environment variables to use a random password of at least 24 characters. If you want to know how to generate a random password, you can check out the [Generating random passwords](#generating-random-passwords) section. The password must be the same in both environment variables so the domain server can authenticate with PostgreSQL.
 5. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
 6. Configure the wallet private key to use. See [Configuration](/docs/configuration.md).
@@ -205,7 +205,7 @@ DS_STORAGE_S3_BASE_ENDPOINT=https://s3.my-provider.com \
 ./ds migrate-storage
 ```
 
-When migrating storage backends, you must ensure that both are configured and accessible. 
+When migrating storage backends, you must ensure that both are configured and accessible.
 The easiest way is to run the migration command inside the same container as the domain server, so it has access to the same environment variables and the database connection.
 Configure environment variables for the new storage backend and set the storage type to `local` or `s3` before running the command.
 
