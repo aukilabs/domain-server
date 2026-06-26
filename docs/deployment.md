@@ -52,7 +52,7 @@ Since the domain server needs to be exposed with an HTTPS address and the domain
 
 1. Configure your domain name to point to your externally exposed public IP address and configure any firewalls and port forwarding rules to allow incoming traffic to ports 80 and 443.
 2. Clone or [download](https://github.com/aukilabs/domain-server/archive/refs/heads/main.zip) this repository or download the Docker Compose YAML [file](https://raw.githubusercontent.com/aukilabs/domain-server/main/docker-compose.yml) and [`client_max_body_size.conf`](https://raw.githubusercontent.com/aukilabs/domain-server/main/client_max_body_size.conf) separately.
-3. Modify `docker-compose.yml` to set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Posemesh Console.
+3. Modify `docker-compose.yml` to set `DS_REGISTRATION_CREDENTIALS` to the credentials you copied from the Auki Console.
 4. Change the `POSTGRES_PASSWORD` and `DS_POSTGRES_URL` environment variables to use a random password of at least 24 characters. If you want to know how to generate a random password, you can check out the [Generating random passwords](#generating-random-passwords) section. The password must be the same in both environment variables so the domain server can authenticate with PostgreSQL.
 5. Configure other environment variables to your liking (you must at least set `VIRTUAL_HOST`, `LETSENCRYPT_HOST` and `DS_PUBLIC_URL`, set these to the domain name you configured in step 1).
 6. Configure the wallet private key to use. See [Configuration](/docs/configuration.md).

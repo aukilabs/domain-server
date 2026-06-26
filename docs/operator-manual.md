@@ -1,8 +1,8 @@
 # Server Operator's Manual
 
-While we at Auki Labs run several Domain servers in multiple regions on AWS, we allow anyone to become a Domain server operator and help us run part of the posemesh infrastructure.
+While we at Auki Labs run several Domain servers in multiple regions on AWS, we allow anyone to become a Domain server operator and help us run part of the Auki infrastructure.
 
-Server operators stake $AUKI tokens and receive weekly token rewards for participating in the network. At a later stage, we plan to reward operators based on the number of domains hosted and amount of traffic served. See the current staking and reward policy in the [posemesh console](https://console.auki.network/) or in Auki's [Discord server](https://discord.gg/auki).
+Server operators stake $AUKI tokens and receive weekly token rewards for participating in the network. At a later stage, we plan to reward operators based on the number of domains hosted and amount of traffic served. See the current staking and reward policy in the [Auki console](https://console.auki.network/) or in Auki's [Discord server](https://discord.gg/auki).
 
 If you have spare compute resources, meet the [minimum requirements](minimum-requirements.md), and wish to become a Domain server operator, please see the [video tutorial](video-tutorial.md) or [deployment methods](deployment.md) for instructions on how to get started.
 

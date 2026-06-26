@@ -8,8 +8,7 @@ There are a few things you can look for:
 - `"message":"responded","tags":{"agent":"Go-http-client/1.1","client_id":"","code":200,"ct_len_in":"","method":"GET","path":"/health",`
   should show up in the log. These are health checks running from the central
   Domain Discovery Service (DDS) to test that the server is up and running.
-- Check that the server appears on Auki's posemesh
-  [dashboard](https://dashboard.auki.network/servers)
+- Check that the server appears on the [Auki dashboard](https://dashboard.auki.network/servers)
 
 If registration with DDS fails, check the status code in the log message.
 The status code is the response from DDS when it tries to call your Domain Server.

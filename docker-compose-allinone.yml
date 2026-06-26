@@ -70,7 +70,7 @@ services:
       DS_LOG_LEVEL: info
       DS_ADDR: ":4000"
       DS_PUBLIC_URL: https://example.com/domains
-      DS_REGISTRATION_CREDENTIALS: "COPY_FROM_POSEMESH_CONSOLE"
+      DS_REGISTRATION_CREDENTIALS: "COPY_FROM_AUKI_CONSOLE"
       DS_STORAGE_LOCAL_PATH: /app/data/domain-data
       DS_WALLET_PRIVATE_KEY_FILE_PATH: /domain-server-private.key
   hagall:
