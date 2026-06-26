@@ -1,7 +1,7 @@
 # Deployment
 
 ## Create Server
-1. Log into the Auki Console at https://console.auki.network/
+1. Log in to the Auki Console at https://console.auki.network/
 2. Open the `Manage Nodes` page and create a domain node following the instructions and start your domain node.
 3. Click the `Manage` button for that domain node, connect your wallet and stake the correct amount of $AUKI tokens based on your intended operation mode (dedicated or public).
 
@@ -205,7 +205,7 @@ DS_STORAGE_S3_BASE_ENDPOINT=https://s3.my-provider.com \
 ./ds migrate-storage
 ```
 
-When migrating storage backends, you must ensure that both are configured and accessible. 
+When migrating storage backends, you must ensure that both are configured and accessible.
 The easiest way is to run the migration command inside the same container as the domain server, so it has access to the same environment variables and the database connection.
 Configure environment variables for the new storage backend and set the storage type to `local` or `s3` before running the command.
 
